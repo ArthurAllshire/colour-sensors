@@ -13,46 +13,36 @@
 // reflectance; this is the default RC timeout, which can be changed with
 // setTimeout()).
 
-QTRSensors qtr_front;
-QTRSensors qtr_back;
+QTRSensors qtr;
 
-const uint8_t SensorCount = 7;
-uint16_t sensorValuesFront[SensorCount];
-uint16_t sensorValuesBack[SensorCount];
+const uint8_t SensorCount = 14;
+uint16_t sensorValues[SensorCount];
 
 void setup()
 {
   // configure the sensors
-  qtr_front.setTypeRC();
-  qtr_front.setSensorPins((const uint8_t[]){22, 25, 26, 29, 30, 33, 34}, SensorCount);
-  qtr_back.setTypeRC();
-  qtr_back.setSensorPins((const uint8_t[]){40, 43, 44, 47, 48, 51, 52}, SensorCount);
+  qtr.setTypeRC();
+  qtr.setSensorPins((const uint8_t[]){22, 25, 26, 29, 30, 33, 34, 38, 40, 41, 43, 44, 47, 48}, SensorCount);
+
 
   Serial.begin(9600);
 }
-
-void printSensorValues(uint16_t sensorValues[], char leadChar)
-{
-  Serial.print(leadChar);
-  // print the sensor values as numbers from 0 to 2500, where 0 means maximum
-  // reflectance and 2500 means minimum reflectance
-  for (uint8_t i = 0; i < SensorCount; i++)
-  {
-    Serial.print(sensorValues[i]);
-    Serial.print(','); 
-  }
-  Serial.println();
-}
-
 
 
 void loop()
 {
   // read raw sensor values
-  qtr_front.read(sensorValuesFront);
-  qtr_back.read(sensorValuesBack);
-  printSensorValues(sensorValuesFront, 'f');
-  printSensorValues(sensorValuesBack, 'b');
+  qtr.read(sensorValues);
+
+  // print the sensor values as numbers from 0 to 2500, where 0 means maximum
+  // reflectance and 2500 means minimum reflectance
+  for (uint8_t i = 0; i < SensorCount; i++)
+  {
+    Serial.print(sensorValues[i]);
+    Serial.print(',');
+  }
+  Serial.println();
   Serial.flush();
+
   delay(1000);
 }
