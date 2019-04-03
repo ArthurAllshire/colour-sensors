@@ -22,10 +22,12 @@ void setup()
 {
   // configure the sensors
   qtr.setTypeRC();
-  qtr.setSensorPins((const uint8_t[]){22, 25, 26, 29, 30, 33, 34, 38, 40, 41, 43, 44, 47, 48}, SensorCount);
+    qtr.setSensorPins((const uint8_t[]){22, 25, 26, 29, 30, 33, 34, 38, 40, 44, 43, 41, 47, 48}, SensorCount);
 
+  //qtr.setSensorPins((const uint8_t[]){22, 25, 26, 29, 30, 33, 34, 38, 40, 41, 43, 44, 47, 48}, SensorCount);
+  qtr.setTimeout(32767);
 
-  Serial.begin(9600);
+  Serial.begin(115200);
 }
 
 
@@ -41,8 +43,6 @@ void loop()
     Serial.print(sensorValues[i]);
     Serial.print(',');
   }
-  Serial.println();
+  Serial.print("\n");
   Serial.flush();
-
-  delay(1000);
 }
